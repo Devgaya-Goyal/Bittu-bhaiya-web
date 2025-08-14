@@ -1,0 +1,1832 @@
+/* Vercel deployment optimizations */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    /* Fix for iOS Safari */
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #ffffff;
+    /* Prevent horizontal scroll on mobile */
+    overflow-x: hidden;
+    /* Better text rendering */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    line-height: 1.3;
+    margin-bottom: 1rem;
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+h2 {
+    font-size: 2rem;
+}
+
+h3 {
+    font-size: 1.5rem;
+}
+
+p {
+    margin-bottom: 1rem;
+    line-height: 1.7;
+}
+
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.btn-primary {
+    background-color: #2563EB;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #1d4ed8;
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background-color: #f8fafc;
+    color: #374151;
+    border: 1px solid #d1d5db;
+}
+
+.btn-secondary:hover {
+    background-color: #f1f5f9;
+    border-color: #9ca3af;
+}
+
+.btn-admin {
+    background-color: #7c3aed;
+    color: white;
+    font-size: 14px;
+    padding: 8px 16px;
+}
+
+.btn-admin:hover {
+    background-color: #6d28d9;
+}
+
+.btn-danger {
+    background-color: #dc2626;
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #b91c1c;
+}
+
+.btn-logout {
+    background-color: #ef4444;
+    color: white;
+    font-size: 14px;
+    padding: 8px 16px;
+}
+
+.btn-logout:hover {
+    background-color: #dc2626;
+}
+
+/* Navigation */
+.navbar {
+    background-color: #ffffff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+}
+
+.nav-logo h2 {
+    color: #2563EB;
+    margin: 0;
+    font-weight: 700;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-item {
+    margin-left: 2rem;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #374151;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: #2563EB;
+}
+
+.nav-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.nav-toggle .bar {
+    width: 25px;
+    height: 3px;
+    background-color: #374151;
+    margin: 3px 0;
+    transition: 0.3s;
+}
+
+/* Hero Section */
+.hero {
+    padding: 100px 0 60px;
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+}
+
+.hero-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 1.5rem;
+}
+
+.hero-subtitle {
+    font-size: 1.25rem;
+    color: #64748b;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.hero-image img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* About Services Section */
+.about-services {
+    padding: 60px 0;
+    background-color: #ffffff;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.section-header h2 {
+    font-size: 2.5rem;
+    color: #1e293b;
+    margin-bottom: 1rem;
+}
+
+.section-header p {
+    font-size: 1.2rem;
+    color: #64748b;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.service-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+.service-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.service-card h3 {
+    color: #1e293b;
+    margin-bottom: 1rem;
+}
+
+.service-card p {
+    color: #64748b;
+    line-height: 1.6;
+}
+
+/* Page Header */
+.page-header {
+    position: relative;
+    height: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 70px;
+}
+
+.header-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.header-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.header-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header-overlay h1 {
+    color: white;
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.header-overlay p {
+    color: #e2e8f0;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+/* About Us Section */
+.about-us {
+    padding: 60px 0;
+    background-color: #f8fafc;
+}
+
+.about-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 3rem;
+    align-items: center;
+}
+
+.about-text h2 {
+    color: #1e293b;
+    margin-bottom: 2rem;
+}
+
+.about-text p {
+    color: #64748b;
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+}
+
+.about-stats {
+    display: flex;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.stat {
+    text-align: center;
+}
+
+.stat-number {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #2563EB;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: #64748b;
+    margin-top: 0.5rem;
+}
+
+.about-image img {
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Job Roles Section */
+.job-roles {
+    padding: 60px 0;
+    background-color: #ffffff;
+}
+
+.jobs-container {
+    margin-top: 2rem;
+}
+
+.jobs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+}
+
+.job-card {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 2rem;
+    transition: all 0.3s ease;
+}
+
+.job-card:hover {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.job-header {
+    margin-bottom: 1.5rem;
+}
+
+.job-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 0.5rem;
+}
+
+.job-meta {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.job-meta span {
+    font-size: 0.9rem;
+    color: #64748b;
+    background-color: #f1f5f9;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    white-space: nowrap;
+}
+
+.job-description {
+    color: #64748b;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.job-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.btn-apply {
+    background-color: #10b981;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-apply:hover {
+    background-color: #059669;
+    transform: translateY(-1px);
+}
+
+/* Services Page */
+.services-header {
+    padding: 100px 0 50px;
+    background: linear-gradient(135deg, #2563EB 0%, #1d4ed8 100%);
+    color: white;
+    text-align: center;
+}
+
+.services-header h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.services-header p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+.services-content {
+    padding: 60px 0;
+}
+
+.service-detail {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 3rem;
+    margin-bottom: 4rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.service-detail:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.service-image img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.service-info h2 {
+    color: #1e293b;
+    margin-bottom: 1rem;
+}
+
+.service-subtitle {
+    font-size: 1.1rem;
+    color: #2563EB;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+}
+
+.service-description p {
+    color: #64748b;
+    margin-bottom: 2rem;
+}
+
+.service-features,
+.service-benefits {
+    margin-bottom: 2rem;
+}
+
+.service-features h4,
+.service-benefits h4 {
+    color: #374151;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.service-features ul {
+    list-style: none;
+    padding: 0;
+}
+
+.service-features li {
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: #64748b;
+}
+
+.service-features li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: #10b981;
+    font-weight: bold;
+}
+
+.services-cta {
+    padding: 80px 0;
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    text-align: center;
+}
+
+.cta-content h2 {
+    color: #1e293b;
+    margin-bottom: 1rem;
+}
+
+.cta-content p {
+    color: #64748b;
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+}
+
+
+
+/* Dashboard */
+.dashboard {
+    padding: 120px 0 80px;
+    min-height: 70vh;
+}
+
+.dashboard-message {
+    background: white;
+    padding: 3rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.dashboard-message h3 {
+    color: #1e293b;
+    margin-bottom: 1rem;
+}
+
+.dashboard-message ul {
+    text-align: left;
+    max-width: 400px;
+    margin: 2rem auto;
+    color: #64748b;
+}
+
+.dashboard-message li {
+    margin-bottom: 0.5rem;
+}
+
+/* Modal */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.modal-header h2 {
+    margin: 0;
+    color: #1e293b;
+    font-size: 1.5rem;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #64748b;
+    padding: 0.5rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.modal-close:hover {
+    background-color: #f1f5f9;
+    color: #374151;
+}
+
+.modal-body {
+    text-align: left;
+    margin-bottom: 1.5rem;
+}
+
+.modal-footer {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.modal-content h3 {
+    margin-bottom: 1rem;
+    color: #1e293b;
+}
+
+.modal-content p {
+    color: #64748b;
+    margin-bottom: 2rem;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+/* Empty state styling */
+.empty-state {
+    text-align: center;
+    padding: 3rem;
+    color: #64748b;
+}
+
+.empty-state h3 {
+    color: #374151;
+    margin-bottom: 1rem;
+}
+
+/* Button improvements */
+.btn-small {
+    padding: 8px 16px;
+    font-size: 14px;
+}
+
+/* Job card improvements */
+.job-card .job-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.job-card .job-actions .btn-apply {
+    flex: 1;
+    min-width: 120px;
+}
+
+/* Success message styling */
+.success-message {
+    background-color: #10b981;
+    color: white;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+/* Error state styling */
+.form-group.error input,
+.form-group.error select,
+.form-group.error textarea {
+    border-color: #ef4444;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.form-group.error::after {
+    content: 'This field is required';
+    color: #ef4444;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    display: block;
+}
+
+/* Spinner for loading states */
+.spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #2563eb;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-right: 0.5rem;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Footer */
+.footer {
+    background-color: #1e293b;
+    color: white;
+    padding: 50px 0 20px;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.footer-section h3,
+.footer-section h4 {
+    margin-bottom: 1rem;
+    color: white;
+}
+
+.footer-section p {
+    color: #cbd5e1;
+    margin-bottom: 1.5rem;
+}
+
+.contact-info p {
+    margin-bottom: 0.5rem;
+    color: #cbd5e1;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-section a,
+.footer-link {
+    color: #cbd5e1;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-section a:hover,
+.footer-link:hover {
+    color: white;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid #374151;
+    color: #94a3b8;
+}
+
+/* HR Solutions Page Styles */
+.hr-solutions-content {
+    padding: 4rem 0;
+}
+
+.hr-intro {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.hr-intro h2 {
+    color: #2563eb;
+    margin-bottom: 1.5rem;
+}
+
+.hr-services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    align-items: center;
+    margin-bottom: 4rem;
+    justify-items: center;
+}
+
+.hr-service-card {
+    background: #f8fafc;
+    padding: 2rem;
+    border-radius: 12px;
+    align-items: center;
+    text-align: center;
+    border: 1px solid #e2e8f0;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hr-service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.service-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.hr-benefits {
+    margin-bottom: 4rem;
+}
+
+.hr-benefits h2 {
+    text-align: center;
+    color: #2563eb;
+    margin-bottom: 3rem;
+}
+
+.benefits-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.benefit-item {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    border-left: 4px solid #2563eb;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.benefit-item h4 {
+    color: #1e40af;
+    margin-bottom: 0.5rem;
+}
+
+.hr-cta {
+    text-align: center;
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    color: white;
+    padding: 3rem;
+    border-radius: 12px;
+}
+
+.hr-cta h2 {
+    color: white;
+    margin-bottom: 1rem;
+}
+
+.btn-large {
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+}
+
+/* Contact Page Styles */
+.contact-content {
+    padding: 4rem 0;
+}
+
+.contact-intro {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.contact-intro h2 {
+    color: #2563eb;
+    margin-bottom: 1.5rem;
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    margin-bottom: 4rem;
+}
+
+.contact-info-section h3 {
+    color: #2563eb;
+    margin-bottom: 2rem;
+}
+
+.contact-details {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: #f8fafc;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+}
+
+.contact-icon {
+    font-size: 1.5rem;
+    min-width: 40px;
+}
+
+.contact-text h4 {
+    color: #1e40af;
+    margin-bottom: 0.5rem;
+}
+
+.contact-text p {
+    margin: 0;
+    color: #64748b;
+}
+
+.services-highlight h3 {
+    color: #2563eb;
+    margin-bottom: 2rem;
+}
+
+.service-points {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.service-point {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    border-left: 4px solid #10b981;
+}
+
+.point-icon {
+    font-size: 1.2rem;
+    color: #10b981;
+    min-width: 24px;
+}
+
+.point-text h4 {
+    color: #1e40af;
+    margin-bottom: 0.5rem;
+}
+
+.point-text p {
+    margin: 0;
+    color: #64748b;
+}
+
+.contact-cta {
+    text-align: center;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    padding: 3rem;
+    border-radius: 12px;
+}
+
+.contact-cta h2 {
+    color: white;
+    margin-bottom: 1rem;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .nav-menu {
+        position: fixed;
+        left: -100%;
+        top: 70px;
+        flex-direction: column;
+        background-color: white;
+        width: 100%;
+        text-align: center;
+        transition: 0.3s;
+        box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+        padding: 2rem 0;
+        max-height: calc(100vh - 70px);
+        overflow-y: auto;
+    }
+
+    .nav-menu.active {
+        left: 0;
+    }
+
+    .nav-item {
+        margin: 1rem 0;
+    }
+
+    .nav-toggle {
+        display: flex;
+    }
+
+    .hero-container {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 2rem;
+    }
+
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .hero-buttons {
+        justify-content: center;
+    }
+
+    .about-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .about-stats {
+        justify-content: center;
+    }
+
+    .service-detail {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .jobs-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        text-align: center;
+    }
+
+    .application-form {
+        padding: 2rem;
+        margin: 0 1rem;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .form-actions {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .form-actions .btn {
+        width: 100%;
+    }
+
+    .job-info {
+        margin: 0 1rem 2rem;
+        padding: 1.5rem;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    .header-overlay h1 {
+        font-size: 2rem;
+    }
+
+    .services-header h1 {
+        font-size: 2rem;
+    }
+
+    /* Modal improvements for mobile */
+    .modal-content {
+        margin: 1rem;
+        padding: 1.5rem;
+        max-height: calc(100vh - 2rem);
+    }
+
+    .modal-footer {
+        flex-direction: column;
+    }
+
+    .modal-footer .btn {
+        width: 100%;
+    }
+
+    /* Job card mobile improvements */
+    .job-card .job-actions {
+        flex-direction: column;
+    }
+
+    .job-card .job-actions .btn-apply {
+        width: 100%;
+    }
+    
+    /* Reduce mobile spacing */
+    .hero {
+        padding: 80px 0 40px;
+    }
+    
+    .about-services,
+    .about-us,
+    .job-roles,
+    .services-content {
+        padding: 40px 0;
+    }
+    
+    .section-header {
+        margin-bottom: 2rem;
+    }
+    
+    .jobs-container {
+        margin-top: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 15px;
+    }
+
+    .hero-title {
+        font-size: 2rem;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    /* HR Solutions responsive */
+    .hr-services-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .benefits-list {
+        grid-template-columns: 1fr;
+    }
+
+    /* Contact page responsive */
+    .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+
+    .service-card {
+        padding: 1.5rem;
+    }
+
+    .job-card {
+        padding: 1.5rem;
+    }
+
+    .form-section h3 {
+        font-size: 1.2rem;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        padding: 10px;
+        font-size: 16px; /* Prevent zoom on iOS */
+    }
+
+    .modal-content {
+        padding: 1.5rem;
+        margin: 1rem;
+    }
+
+    /* Navigation improvements for very small screens */
+    .nav-container {
+        padding: 0 15px;
+    }
+
+    .nav-logo h2 {
+        font-size: 1.25rem;
+    }
+
+    /* Footer mobile improvements */
+    .footer-container {
+        padding: 0 15px;
+    }
+
+    .footer-content {
+        gap: 1.5rem;
+    }
+
+    /* Service cards mobile improvements */
+    .service-detail {
+        padding: 1.5rem 0;
+    }
+
+    .service-image img {
+        height: 200px;
+    }
+}
+
+/* Additional mobile improvements */
+@media (max-width: 768px) {
+    /* Improve touch targets */
+    .btn, .nav-link, .service-card, .job-card {
+        min-height: 44px;
+        min-width: 44px;
+    }
+
+    /* Better spacing for mobile */
+    .hero {
+        padding: 100px 0 60px;
+    }
+
+    .hero-container {
+        gap: 2rem;
+    }
+
+    .hero-title {
+        font-size: 2.25rem;
+        line-height: 1.2;
+    }
+
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+
+    /* Improve service cards on mobile */
+    .service-card {
+        margin: 0 0.5rem;
+    }
+
+    /* Better job card layout on mobile */
+    .job-card .job-meta {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: flex-start;
+    }
+
+    .job-card .job-meta span {
+        font-size: 0.85rem;
+    }
+
+    /* Improve modal on mobile */
+    .modal-content {
+        width: 95%;
+        max-width: none;
+        margin: 0.5rem;
+    }
+
+    /* Better footer spacing on mobile */
+    .footer {
+        padding: 40px 0 20px;
+    }
+
+    .footer-content {
+        gap: 2rem;
+    }
+
+    /* Improve contact page on mobile */
+    .contact-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+    }
+
+    .contact-icon {
+        font-size: 2rem;
+    }
+
+    /* Better HR solutions layout on mobile */
+    .hr-service-card {
+        margin: 0 0.5rem;
+    }
+
+    .benefit-item {
+        margin: 0 0.5rem;
+    }
+
+    /* Improve page headers on mobile */
+    .page-header {
+        height: 300px;
+    }
+
+    .header-overlay h1 {
+        font-size: 1.75rem;
+        line-height: 1.2;
+    }
+
+    .header-overlay p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Very small screen improvements */
+    .hero-title {
+        font-size: 1.75rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+
+    .section-header h2 {
+        font-size: 1.75rem;
+    }
+
+    .section-header p {
+        font-size: 1rem;
+    }
+
+    /* Better button sizing for small screens */
+    .btn {
+        padding: 12px 20px;
+        font-size: 16px;
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .hero-buttons {
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
+    }
+
+    /* Improve service cards on very small screens */
+    .service-card {
+        padding: 1.5rem 1rem;
+        margin: 0;
+    }
+
+    .service-icon {
+        font-size: 2.5rem;
+    }
+
+    /* Better job cards on very small screens */
+    .job-card {
+        padding: 1.5rem 1rem;
+        margin: 0;
+    }
+
+    .job-title {
+        font-size: 1.25rem;
+    }
+
+    /* Improve modal on very small screens */
+    .modal-content {
+        padding: 1rem;
+        margin: 0.5rem;
+    }
+
+    .modal-header h2 {
+        font-size: 1.25rem;
+    }
+
+    /* Better footer on very small screens */
+    .footer-container {
+        padding: 0 15px;
+    }
+
+    .footer-section h3,
+    .footer-section h4 {
+        font-size: 1.1rem;
+    }
+
+    /* Improve contact page on very small screens */
+    .contact-intro h2 {
+        font-size: 1.5rem;
+    }
+
+    .contact-item {
+        padding: 1rem;
+    }
+
+    /* Better HR solutions on very small screens */
+    .hr-intro h2 {
+        font-size: 1.5rem;
+    }
+
+    .hr-service-card {
+        padding: 1.5rem 1rem;
+    }
+
+    .benefit-item {
+        padding: 1.5rem 1rem;
+    }
+}
+
+/* iOS Safari specific fixes */
+@supports (-webkit-touch-callout: none) {
+    .hero,
+    .page-header {
+        min-height: calc(100vh - 70px);
+        height: calc(100vh - 70px);
+    }
+    
+    /* Fix for iOS Safari input zoom */
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="password"],
+    select,
+    textarea {
+        font-size: 16px !important;
+    }
+}
+
+/* Android Chrome specific fixes */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+    /* Fix for Android Chrome viewport issues */
+    .hero,
+    .page-header {
+        min-height: 100vh;
+        height: 100vh;
+    }
+}
+
+/* Improve accessibility */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .btn:hover {
+        transform: none !important;
+    }
+    
+    .service-card:hover,
+    .job-card:hover {
+        transform: none !important;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .btn-primary {
+        background-color: #000;
+        color: #fff;
+        border: 2px solid #000;
+    }
+
+    .btn-secondary {
+        background-color: #fff;
+        color: #000;
+        border: 2px solid #000;
+    }
+
+    .service-card,
+    .job-card {
+        border: 2px solid #000;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1a1a1a;
+        color: #e5e5e5;
+    }
+
+    .navbar {
+        background-color: #262626;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .nav-logo h2 {
+        color: #60a5fa;
+    }
+
+    .nav-link {
+        color: #d4d4d4;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+        color: #60a5fa;
+    }
+
+    .hero {
+        background: linear-gradient(135deg, #262626 0%, #404040 100%);
+    }
+
+    .hero-title {
+        color: #f5f5f5;
+    }
+
+    .hero-subtitle {
+        color: #a3a3a3;
+    }
+
+    .service-card,
+    .job-card {
+        background-color: #262626;
+        color: #e5e5e5;
+        border: 1px solid #404040;
+    }
+
+    .service-card h3,
+    .job-card h3 {
+        color: #f5f5f5;
+    }
+
+    .service-card p,
+    .job-card p {
+        color: #a3a3a3;
+    }
+
+    .footer {
+        background-color: #0a0a0a;
+    }
+
+    .footer-section h3,
+    .footer-section h4 {
+        color: #f5f5f5;
+    }
+
+    .footer-section p,
+    .footer-section a {
+        color: #a3a3a3;
+    }
+}
+
+/* Performance optimizations */
+.btn, .service-card, .job-card {
+    will-change: transform;
+    backface-visibility: hidden;
+}
+
+/* Better focus states for accessibility */
+.btn:focus,
+.nav-link:focus,
+.service-card:focus,
+.job-card:focus {
+    outline: 2px solid #2563EB;
+    outline-offset: 2px;
+}
+
+/* Improve loading states */
+.spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #2563EB;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-right: 0.5rem;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Better error states */
+.error-message {
+    color: #ef4444;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+    display: block;
+}
+
+/* Improve success messages */
+.success-message {
+    background-color: #10b981;
+    color: white;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+/* Loading and error states */
+.loading-state {
+    text-align: center;
+    padding: 3rem;
+    color: #64748b;
+}
+
+.loading-state .spinner {
+    margin: 0 auto 1rem;
+}
+
+.error-state {
+    text-align: center;
+    padding: 3rem;
+    color: #ef4444;
+}
+
+.error-state p {
+    margin-bottom: 1rem;
+}
+
+/* Job requirements styling */
+.job-requirements h3 {
+    color: #1e293b;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.job-requirements ul {
+    list-style: none;
+    padding: 0;
+}
+
+.job-requirements li {
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: #64748b;
+}
+
+.job-requirements li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: #10b981;
+    font-weight: bold;
+}
+
+/* Job meta improvements */
+.job-meta {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.job-meta span {
+    font-size: 0.9rem;
+    color: #64748b;
+    background-color: #f1f5f9;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    white-space: nowrap;
+}
+
+/* Improve modal styling */
+.modal-content {
+    position: relative;
+}
+
+.modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1;
+}
+
+/* Improve button states */
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+.btn:disabled:hover {
+    transform: none !important;
+}
+
+/* Improve form styling */
+.form-group.error label {
+    color: #ef4444;
+}
+
+.form-group.error small {
+    color: #ef4444;
+    margin-top: 0.25rem;
+}
+
+/* CTA buttons styling */
+.cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+}
+
+.cta-buttons .btn {
+    min-width: 200px;
+}
+
+/* HR CTA specific styling */
+.hr-cta .cta-buttons {
+    margin-top: 2rem;
+}
+
+.hr-cta .cta-buttons .btn {
+    min-width: 180px;
+}
+
+/* Responsive CTA buttons */
+@media (max-width: 768px) {
+    .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .cta-buttons .btn {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .hr-cta .cta-buttons .btn {
+        width: 100%;
+        max-width: 280px;
+    }
+}
+
+@media (max-width: 480px) {
+    .cta-buttons .btn {
+        max-width: 250px;
+        padding: 12px 20px;
+        font-size: 16px;
+    }
+
+    .hr-cta .cta-buttons .btn {
+        max-width: 250px;
+    }
+}
