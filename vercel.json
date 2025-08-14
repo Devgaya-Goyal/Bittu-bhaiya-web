@@ -14,30 +14,30 @@
       "use": "@vercel/static"
     }
   ],
-  "routes": [
+  "rewrites": [
     {
-      "src": "/",
-      "dest": "/index.html"
+      "source": "/",
+      "destination": "/index.html"
     },
     {
-      "src": "/placement",
-      "dest": "/placement.html"
+      "source": "/placement",
+      "destination": "/placement.html"
     },
     {
-      "src": "/services",
-      "dest": "/services.html"
+      "source": "/services",
+      "destination": "/services.html"
     },
     {
-      "src": "/hr-solutions",
-      "dest": "/hr-solutions.html"
+      "source": "/hr-solutions",
+      "destination": "/hr-solutions.html"
     },
     {
-      "src": "/contact",
-      "dest": "/contact.html"
+      "source": "/contact",
+      "destination": "/contact.html"
     },
     {
-      "src": "/(.*)",
-      "dest": "/$1"
+      "source": "/(.*)",
+      "destination": "/$1"
     }
   ],
   "headers": [
@@ -63,4 +63,4 @@
       ]
     }
   ]
-} 
+}
